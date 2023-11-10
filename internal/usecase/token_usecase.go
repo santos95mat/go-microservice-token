@@ -3,13 +3,14 @@ package usecase
 import (
 	"github.com/santos95mat/go-microservice-token/internal/dto"
 	"github.com/santos95mat/go-microservice-token/internal/entity"
+	"github.com/santos95mat/go-microservice-token/internal/interfaces"
 )
 
 type TokenUsecase struct {
-	TokenRepository entity.TokenRepository
+	TokenRepository interfaces.TokenRepository
 }
 
-func NewTokenUsecase(tokenRepository entity.TokenRepository) *TokenUsecase {
+func NewTokenUsecase(tokenRepository interfaces.TokenRepository) *TokenUsecase {
 	return &TokenUsecase{TokenRepository: tokenRepository}
 }
 
