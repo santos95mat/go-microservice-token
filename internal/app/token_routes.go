@@ -3,10 +3,18 @@ package app
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/santos95mat/go-microservice-token/internal/handle"
+	"github.com/santos95mat/go-microservice-token/internal/repository"
+	"github.com/santos95mat/go-microservice-token/internal/usecase"
+)
+
+var (
+	tokenRepository = repository.NewTokenRepository()
+	tokenUsecase    = usecase.NewTokenUsecase(tokenRepository)
+	tokenHandler    = handle.NewTokenHandle(tokenUsecase)
 )
 
 func addTokenRoutes(token fiber.Router) {
-	token.Post("/", handle.TokenHandler.Create)
+	token.Post("/", tokenHandler.Create)
 
-	token.Get("/", handle.TokenHandler.GetOne)
+	token.Get("/", tokenHandler.GetOne)
 }

@@ -3,21 +3,14 @@ package handle
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/santos95mat/go-microservice-token/internal/dto"
-	"github.com/santos95mat/go-microservice-token/internal/repository"
 	"github.com/santos95mat/go-microservice-token/internal/usecase"
-)
-
-var (
-	tokenRepository = repository.NewTokenRepository()
-	tokenUsecase    = usecase.NewTokenUsecase(tokenRepository)
-	TokenHandler    = newTokenHandle(tokenUsecase)
 )
 
 type tokenHandle struct {
 	TokenUsecase *usecase.TokenUsecase
 }
 
-func newTokenHandle(tokenUsecase *usecase.TokenUsecase) *tokenHandle {
+func NewTokenHandle(tokenUsecase *usecase.TokenUsecase) *tokenHandle {
 	return &tokenHandle{TokenUsecase: tokenUsecase}
 }
 

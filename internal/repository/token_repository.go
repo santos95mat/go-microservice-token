@@ -6,20 +6,20 @@ import (
 	"github.com/santos95mat/go-microservice-token/internal/entity"
 )
 
-type TokenRepository struct {
+type tokenRepository struct {
 }
 
-func NewTokenRepository() *TokenRepository {
-	return &TokenRepository{}
+func NewTokenRepository() *tokenRepository {
+	return &tokenRepository{}
 }
 
-func (r *TokenRepository) Create(token entity.Token) error {
+func (r *tokenRepository) Create(token entity.Token) error {
 	err := initializer.DB.Create(&token).Error
 
 	return err
 }
 
-func (r *TokenRepository) GetOne(search dto.TokenInputDTO) (entity.Token, error) {
+func (r *tokenRepository) GetOne(search dto.TokenInputDTO) (entity.Token, error) {
 	var token entity.Token
 	err := initializer.DB.Where("user_id = ? AND token = ?", search.UserID, search.Token).First(&token).Error
 
