@@ -9,11 +9,11 @@ type TokenUsecase struct {
 	TokenRepository entity.TokenRepository
 }
 
-func NewTokenUsecase(tokenRepository entity.TokenRepository) TokenUsecase {
-	return TokenUsecase{TokenRepository: tokenRepository}
+func NewTokenUsecase(tokenRepository entity.TokenRepository) *TokenUsecase {
+	return &TokenUsecase{TokenRepository: tokenRepository}
 }
 
-func (u TokenUsecase) ExecuteCreate(input dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
+func (u *TokenUsecase) ExecuteCreate(input dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
 	token := entity.NewToken(input.UserID, input.Token)
 	err := u.TokenRepository.Create(token)
 
@@ -28,7 +28,7 @@ func (u TokenUsecase) ExecuteCreate(input dto.TokenInputDTO) (dto.TokenOutputDTO
 	}, err
 }
 
-func (u TokenUsecase) ExecuteGetOne(search dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
+func (u *TokenUsecase) ExecuteGetOne(search dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
 	token, err := u.TokenRepository.GetOne(search)
 
 	if err != nil {

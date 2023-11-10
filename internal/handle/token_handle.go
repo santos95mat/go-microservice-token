@@ -8,17 +8,17 @@ import (
 )
 
 var (
-	tokenRepository = repository.TokenRepository{}
-	tokenUsecaser   = usecase.NewTokenUsecase(tokenRepository)
-	TokenHandler    = newTokenHandle(tokenUsecaser)
+	tokenRepository = repository.NewTokenRepository()
+	tokenUsecase    = usecase.NewTokenUsecase(tokenRepository)
+	TokenHandler    = newTokenHandle(tokenUsecase)
 )
 
 type tokenHandle struct {
-	TokenUsecase usecase.TokenUsecase
+	TokenUsecase *usecase.TokenUsecase
 }
 
-func newTokenHandle(tokenUsecase usecase.TokenUsecase) tokenHandle {
-	return tokenHandle{TokenUsecase: tokenUsecase}
+func newTokenHandle(tokenUsecase *usecase.TokenUsecase) *tokenHandle {
+	return &tokenHandle{TokenUsecase: tokenUsecase}
 }
 
 func (h *tokenHandle) Create(c *fiber.Ctx) error {
