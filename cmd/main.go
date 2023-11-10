@@ -1,5 +1,15 @@
 package main
 
-func init() {}
+import (
+	"github.com/santos95mat/go-microservice-token/initializer"
+	"github.com/santos95mat/go-microservice-token/internal/app"
+)
 
-func main() {}
+func init() {
+	initializer.LoadEnvVariables()
+	initializer.ConnectDB()
+}
+
+func main() {
+	app.Run()
+}
