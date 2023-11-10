@@ -29,8 +29,8 @@ func (u *TokenUsecase) ExecuteCreate(input dto.TokenInputDTO) (dto.TokenOutputDT
 	}, err
 }
 
-func (u *TokenUsecase) ExecuteGetOne(search dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
-	token, err := u.TokenRepository.GetOne(search)
+func (u *TokenUsecase) ExecuteValidate(search dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
+	token, err := u.TokenRepository.Validate(search)
 
 	if err != nil {
 		return dto.TokenOutputDTO{}, err

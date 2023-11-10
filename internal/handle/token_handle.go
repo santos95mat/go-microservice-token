@@ -3,14 +3,14 @@ package handle
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/santos95mat/go-microservice-token/internal/dto"
-	"github.com/santos95mat/go-microservice-token/internal/usecase"
+	"github.com/santos95mat/go-microservice-token/internal/interfaces"
 )
 
 type tokenHandle struct {
-	TokenUsecase *usecase.TokenUsecase
+	TokenUsecase interfaces.TokenUsecase
 }
 
-func NewTokenHandle(tokenUsecase *usecase.TokenUsecase) *tokenHandle {
+func NewTokenHandle(tokenUsecase interfaces.TokenUsecase) *tokenHandle {
 	return &tokenHandle{TokenUsecase: tokenUsecase}
 }
 
@@ -40,7 +40,7 @@ func (h *tokenHandle) GetOne(c *fiber.Ctx) error {
 	input.UserID = q["userID"]
 	input.Token = q["token"]
 
-	token, err := h.TokenUsecase.ExecuteGetOne(input)
+	token, err := h.TokenUsecase.ExecuteValidate(input)
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
