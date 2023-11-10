@@ -16,5 +16,5 @@ var (
 func addTokenRoutes(token fiber.Router) {
 	token.Post("/", tokenHandler.Create)
 
-	token.Get("/", tokenHandler.GetOne)
+	token.Post("/validate", tokenHandler.Validate)
 }

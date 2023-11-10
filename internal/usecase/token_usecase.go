@@ -4,6 +4,7 @@ import (
 	"github.com/santos95mat/go-microservice-token/internal/dto"
 	"github.com/santos95mat/go-microservice-token/internal/entity"
 	"github.com/santos95mat/go-microservice-token/internal/interfaces"
+	"github.com/santos95mat/go-microservice-token/internal/util"
 )
 
 type TokenUsecase struct {
@@ -14,31 +15,32 @@ func NewTokenUsecase(tokenRepository interfaces.TokenRepository) *TokenUsecase {
 	return &TokenUsecase{TokenRepository: tokenRepository}
 }
 
-func (u *TokenUsecase) ExecuteCreate(input dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
-	token := entity.NewToken(input.UserID, input.Token)
+func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputTokenDTO, error) {
+	randonToken := util.RandonToken{
+		LowCaseQuantity:     1,
+		UpCaseQuantity:      1,
+		NumbersQuantity:     1,
+		SpecialCharQuantity: 1,
+	}
+
+	token := entity.NewToken(input.UserID, randonToken.Generate())
 	err := u.TokenRepository.Create(token)
 
 	if err != nil {
-		return dto.TokenOutputDTO{}, err
+		return nil, err
 	}
 
-	return dto.TokenOutputDTO{
-		ID:     token.ID,
-		UserID: token.UserID,
-		Token:  token.Token,
-	}, err
+	return &dto.OutputTokenDTO{
+		Token: token.Token,
+	}, nil
 }
 
-func (u *TokenUsecase) ExecuteValidate(search dto.TokenInputDTO) (dto.TokenOutputDTO, error) {
-	token, err := u.TokenRepository.Validate(search)
+func (u *TokenUsecase) ExecuteValidate(input dto.ValidateTokenDTO) error {
+	err := u.TokenRepository.Validate(input)
 
 	if err != nil {
-		return dto.TokenOutputDTO{}, err
+		return err
 	}
 
-	return dto.TokenOutputDTO{
-		ID:     token.ID,
-		UserID: token.UserID,
-		Token:  token.Token,
-	}, err
+	return nil
 }

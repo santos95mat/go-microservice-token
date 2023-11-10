@@ -2,6 +2,7 @@ package handle
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/santos95mat/go-microservice-token/internal/dto"
 	"github.com/santos95mat/go-microservice-token/internal/interfaces"
 )
@@ -15,11 +16,17 @@ func NewTokenHandle(tokenUsecase interfaces.TokenUsecase) *tokenHandle {
 }
 
 func (h *tokenHandle) Create(c *fiber.Ctx) error {
-	var input dto.TokenInputDTO
+	var input dto.CreateTokenDTO
 	err := c.BodyParser(&input)
 
 	if err != nil {
 		return c.Status(fiber.StatusUnprocessableEntity).JSON(err)
+	}
+
+	_, err = uuid.Parse(input.UserID)
+
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(err.Error())
 	}
 
 	token, err := h.TokenUsecase.ExecuteCreate(input)
@@ -33,14 +40,11 @@ func (h *tokenHandle) Create(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(token)
 }
 
-func (h *tokenHandle) GetOne(c *fiber.Ctx) error {
-	var input dto.TokenInputDTO
+func (h *tokenHandle) Validate(c *fiber.Ctx) error {
+	var input dto.ValidateTokenDTO
+	err := c.BodyParser(&input)
 
-	q := c.Queries()
-	input.UserID = q["userID"]
-	input.Token = q["token"]
-
-	token, err := h.TokenUsecase.ExecuteValidate(input)
+	err = h.TokenUsecase.ExecuteValidate(input)
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -48,6 +52,8 @@ func (h *tokenHandle) GetOne(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(token)
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"message": "Valid",
+	})
 
 }

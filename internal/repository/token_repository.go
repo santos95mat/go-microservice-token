@@ -19,9 +19,9 @@ func (*tokenRepository) Create(token entity.Token) error {
 	return err
 }
 
-func (*tokenRepository) Validate(search dto.TokenInputDTO) (entity.Token, error) {
+func (*tokenRepository) Validate(search dto.ValidateTokenDTO) error {
 	var token entity.Token
 	err := initializer.DB.Where("user_id = ? AND token = ?", search.UserID, search.Token).First(&token).Error
 
-	return token, err
+	return err
 }

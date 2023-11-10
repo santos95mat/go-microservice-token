@@ -1,14 +1,14 @@
 package dto
 
-import "github.com/google/uuid"
-
-type TokenInputDTO struct {
+type CreateTokenDTO struct {
 	UserID string `json:"user_id"`
-	Token  string `json:"token"`
 }
 
-type TokenOutputDTO struct {
-	ID     uuid.UUID `json:"id"`
-	UserID string    `json:"user_id"`
-	Token  string    `json:"token"`
+type OutputTokenDTO struct {
+	Token string `json:"token"`
+}
+
+type ValidateTokenDTO struct {
+	UserID string `json:"user_id"`
+	Token  string `json:"token"`
 }
