@@ -10,11 +10,11 @@ import (
 var (
 	tokenRepository = repository.NewTokenRepository()
 	tokenUsecase    = usecase.NewTokenUsecase(tokenRepository)
-	tokenHandler    = handle.NewTokenHandle(tokenUsecase)
+	tokenHandle     = handle.NewTokenHandle(tokenUsecase)
 )
 
 func addTokenRoutes(token fiber.Router) {
-	token.Post("/", tokenHandler.Create)
+	token.Post("/", tokenHandle.Create)
 
-	token.Post("/validate", tokenHandler.Validate)
+	token.Post("/validate", tokenHandle.Validate)
 }
