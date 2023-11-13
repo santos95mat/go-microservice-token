@@ -44,16 +44,20 @@ func (h *tokenHandle) Validate(c *fiber.Ctx) error {
 	var input dto.ValidateTokenDTO
 	err := c.BodyParser(&input)
 
-	err = h.TokenUsecase.ExecuteValidate(input)
+	if err != nil {
+		return c.Status(fiber.StatusUnprocessableEntity).JSON(err)
+	}
+
+	str, err := h.TokenUsecase.ExecuteValidate(input)
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "token invalid",
+			"message": err.Error(),
 		})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "token valid",
+		"message": str,
 	})
 
 }

@@ -41,12 +41,12 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 	}, nil
 }
 
-func (u *TokenUsecase) ExecuteValidate(input dto.ValidateTokenDTO) error {
-	err := u.TokenRepository.Validate(input)
+func (u *TokenUsecase) ExecuteValidate(input dto.ValidateTokenDTO) (string, error) {
+	str, err := u.TokenRepository.Validate(input)
 
 	if err != nil {
-		return err
+		return str, err
 	}
 
-	return nil
+	return str, nil
 }

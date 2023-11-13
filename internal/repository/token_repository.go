@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"errors"
 	"time"
 
 	"github.com/santos95mat/go-microservice-token/initializer"
@@ -22,17 +21,17 @@ func (*tokenRepository) Create(token entity.Token) error {
 	return err
 }
 
-func (*tokenRepository) Validate(search dto.ValidateTokenDTO) error {
+func (*tokenRepository) Validate(search dto.ValidateTokenDTO) (string, error) {
 	var token entity.Token
-	err := initializer.DB.Where("user_id = ? AND token = ?", search.UserID, search.Token).First(&token).Error
+	err := initializer.DB.Where("user_id = ? AND token = ?", search.UserID, search.Token).Find(&token).Error
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if time.Now().After(token.Expire) {
-		err = errors.New("Error: Token Invalid")
+		return "invalid", nil
 	}
 
-	return err
+	return "valid", nil
 }

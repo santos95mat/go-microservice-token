@@ -7,10 +7,10 @@ import (
 
 type TokenRepository interface {
 	Create(token entity.Token) error
-	Validate(input dto.ValidateTokenDTO) error
+	Validate(input dto.ValidateTokenDTO) (string, error)
 }
 
 type TokenUsecase interface {
 	ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputTokenDTO, error)
-	ExecuteValidate(search dto.ValidateTokenDTO) error
+	ExecuteValidate(search dto.ValidateTokenDTO) (string, error)
 }
