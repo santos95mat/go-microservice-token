@@ -38,14 +38,16 @@ $ go run cmd/api/main.go
 
 #### Para criar um Token você deve mandar no body um JSON com a seguinte informação
 ##### - Se o id informado não for um uuid um erro será gerado
+##### - validation é a validade do token em minutos
 
 ```bash
 {
-  "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0"
+  "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0",
+  "validation": 10
 }
 ```
 
-#### Para Validar o Token  Gerado você deve mandar no body um JSON com a seguinte informação
+#### Para Validar o Token gerado você deve mandar no body um JSON com as seguintes informações
 ```bash
 {
   "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0",
