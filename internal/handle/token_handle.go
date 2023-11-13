@@ -48,12 +48,12 @@ func (h *tokenHandle) Validate(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
+			"message": "token invalid",
 		})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Valid",
+		"message": "token valid",
 	})
 
 }

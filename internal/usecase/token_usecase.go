@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"time"
+
 	"github.com/santos95mat/go-microservice-token/internal/dto"
 	"github.com/santos95mat/go-microservice-token/internal/entity"
 	"github.com/santos95mat/go-microservice-token/internal/interfaces"
@@ -23,7 +25,10 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 		SpecialCharQuantity: 1,
 	}
 
-	token := entity.NewToken(input.UserID, randonToken.Generate())
+	tokenStr := randonToken.Generate()
+	validation := time.Now().Add(time.Duration(input.Validation) * time.Minute)
+
+	token := entity.NewToken(input.UserID, tokenStr, validation)
 	err := u.TokenRepository.Create(token)
 
 	if err != nil {
@@ -31,7 +36,8 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 	}
 
 	return &dto.OutputTokenDTO{
-		Token: token.Token,
+		Token:  token.Token,
+		Expire: token.Expire,
 	}, nil
 }
 
