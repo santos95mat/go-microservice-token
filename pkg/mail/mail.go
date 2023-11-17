@@ -9,30 +9,6 @@ import (
 	"time"
 )
 
-func SendMail(sub string, body string, to []string) {
-	password := os.Getenv("PASSWORD")
-	auth := smtp.PlainAuth(
-		"",
-		"santos95.mat@gmail.com",
-		password,
-		"smtp.gmail.com",
-	)
-
-	msg := "Subject:" + sub + "\n" + body
-
-	err := smtp.SendMail(
-		"smtp.gmail.com:587",
-		auth,
-		"santos95.mat@gmail.com",
-		to,
-		[]byte(msg),
-	)
-
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
 func SendMailHTML(token string, expire time.Time, to []string) {
 	// Get html
 	var body bytes.Buffer
@@ -58,9 +34,10 @@ func SendMailHTML(token string, expire time.Time, to []string) {
 	}
 
 	password := os.Getenv("PASSWORD")
+	email := os.Getenv("EMAIL")
 	auth := smtp.PlainAuth(
 		"",
-		"santos95.mat@gmail.com",
+		email,
 		password,
 		"smtp.gmail.com",
 	)
@@ -72,7 +49,7 @@ func SendMailHTML(token string, expire time.Time, to []string) {
 	err = smtp.SendMail(
 		"smtp.gmail.com:587",
 		auth,
-		"santos95.mat@gmail.com",
+		email,
 		to,
 		[]byte(msg),
 	)
