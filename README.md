@@ -38,11 +38,13 @@ $ go run cmd/api/main.go
 
 #### Para criar um Token você deve mandar no body um JSON com a seguinte informação
 ##### - Se o id informado não for um uuid um erro será gerado
+##### - email para onde o token será enviado
 ##### - validation é a validade do token em minutos
 
 ```bash
 {
   "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0",
+  "email" : "email@email.com",
   "validation": 10
 }
 ```

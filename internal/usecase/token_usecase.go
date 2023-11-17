@@ -10,11 +10,11 @@ import (
 )
 
 type TokenUsecase struct {
-	TokenRepository interfaces.TokenRepository
+	tokenRepository interfaces.TokenRepository
 }
 
 func NewTokenUsecase(tokenRepository interfaces.TokenRepository) *TokenUsecase {
-	return &TokenUsecase{TokenRepository: tokenRepository}
+	return &TokenUsecase{tokenRepository: tokenRepository}
 }
 
 func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputTokenDTO, error) {
@@ -29,7 +29,7 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 	validation := time.Now().Add(time.Duration(input.Validation) * time.Minute)
 
 	token := entity.NewToken(input.UserID, tokenStr, validation)
-	err := u.TokenRepository.Create(token)
+	err := u.tokenRepository.Create(token)
 
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 }
 
 func (u *TokenUsecase) ExecuteValidate(input dto.ValidateTokenDTO) (string, error) {
-	str, err := u.TokenRepository.Validate(input)
+	str, err := u.tokenRepository.Validate(input)
 
 	if err != nil {
 		return str, err
