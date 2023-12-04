@@ -41,7 +41,7 @@ $ go run cmd/api/main.go
 ##### - email para onde o token será enviado
 ##### - validation é a validade do token em minutos
 
-```bash
+```JSON
 {
   "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0",
   "email" : "email@email.com",
@@ -50,7 +50,7 @@ $ go run cmd/api/main.go
 ```
 
 #### Para Validar o Token gerado você deve mandar no body um JSON com as seguintes informações
-```bash
+```JSON
 {
   "user_id": "4cb16abd-be70-420d-82af-ecbf21c133a0",
   "token": "$r5D"
