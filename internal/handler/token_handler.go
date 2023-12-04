@@ -1,4 +1,4 @@
-package handle
+package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
@@ -8,15 +8,15 @@ import (
 	"github.com/santos95mat/go-microservice-token/pkg/mail"
 )
 
-type tokenHandle struct {
+type tokenHandler struct {
 	tokenUsecase interfaces.TokenUsecase
 }
 
-func NewTokenHandle(tokenUsecase interfaces.TokenUsecase) *tokenHandle {
-	return &tokenHandle{tokenUsecase: tokenUsecase}
+func NewTokenHandler(tokenUsecase interfaces.TokenUsecase) *tokenHandler {
+	return &tokenHandler{tokenUsecase: tokenUsecase}
 }
 
-func (h *tokenHandle) Create(c *fiber.Ctx) error {
+func (h *tokenHandler) Create(c *fiber.Ctx) error {
 	var input dto.CreateTokenDTO
 	err := c.BodyParser(&input)
 
@@ -43,7 +43,7 @@ func (h *tokenHandle) Create(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(token)
 }
 
-func (h *tokenHandle) Validate(c *fiber.Ctx) error {
+func (h *tokenHandler) Validate(c *fiber.Ctx) error {
 	var input dto.ValidateTokenDTO
 	err := c.BodyParser(&input)
 
