@@ -9,14 +9,17 @@ import (
 	"github.com/santos95mat/go-microservice-token/internal/util"
 )
 
+// Structure for repository abstraction
 type TokenUsecase struct {
 	tokenRepository interfaces.TokenRepository
 }
 
+// Function to create a new tokenUseCase
 func NewTokenUsecase(tokenRepository interfaces.TokenRepository) *TokenUsecase {
 	return &TokenUsecase{tokenRepository: tokenRepository}
 }
 
+// Method to Execute Create repository function
 func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputTokenDTO, error) {
 	randonToken := util.RandonToken{
 		LowCaseQuantity:     1,
@@ -41,6 +44,7 @@ func (u *TokenUsecase) ExecuteCreate(input dto.CreateTokenDTO) (*dto.OutputToken
 	}, nil
 }
 
+// Method to Execute Validate repository function
 func (u *TokenUsecase) ExecuteValidate(input dto.ValidateTokenDTO) (string, error) {
 	str, err := u.tokenRepository.Validate(input)
 

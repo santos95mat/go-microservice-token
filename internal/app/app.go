@@ -8,15 +8,14 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-var (
-	app        = fiber.New()
-	tokenGroup = app.Group("/token")
-)
+// Variable to instantiate a new webb application
+var app = fiber.New()
 
+// Function to run the web application
 func Run() {
 	app.Use(cors.New())
 
-	addTokenRoutes(tokenGroup)
+	addTokenRoutes(app)
 
 	err := app.Listen(":" + os.Getenv("PORT"))
 

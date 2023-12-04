@@ -6,6 +6,7 @@ import (
 	"github.com/santos95mat/go-microservice-token/internal/util"
 )
 
+// Function to test a token generation
 func testGenerate(t *testing.T) {
 	tokenDto := util.RandonToken{
 		LowCaseQuantity:     1,

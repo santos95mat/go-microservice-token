@@ -13,8 +13,9 @@ var (
 	tokenHandler    = handler.NewTokenHandler(tokenUsecase)
 )
 
-func addTokenRoutes(token fiber.Router) {
-	token.Post("/", tokenHandler.Create)
+func addTokenRoutes(app *fiber.App) {
+	token := app.Group("/token")
 
+	token.Post("/", tokenHandler.Create)
 	token.Post("/validate", tokenHandler.Validate)
 }

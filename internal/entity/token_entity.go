@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// Entity token for data flow with the database
 type Token struct {
 	ID        uuid.UUID `gorm:"primaryKey"`
 	UserID    string    `gorm:"not null"`
@@ -15,6 +16,7 @@ type Token struct {
 	UpdatedAt time.Time
 }
 
+// Function to create a new token
 func NewToken(userID string, token string, expire time.Time) Token {
 	return Token{
 		ID:     uuid.New(),

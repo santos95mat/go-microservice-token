@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// Email sending function
 func SendMailHTML(token string, expire time.Time, to []string) {
 	// Get html
 	var body bytes.Buffer
